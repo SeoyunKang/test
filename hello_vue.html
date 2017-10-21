@@ -15,6 +15,21 @@
         <my-local-component></my-local-component>
       </div>
 
+      <div id="app3">
+        {{ msg }}
+        <my-component></my-component>
+        <my-local-component></my-local-component>
+        <!-- local-component는 app2에 등록된 지역변수라 뜨지않음. -->
+      </div>
+
+      <div id="app4">
+        <header>
+          <h3>{{msg}}</h3>
+        </header>
+        <todo-item></todo-item>
+        <ma-component></ma-component>
+      </div>
+
       <script src="https://unpkg.com/vue@2.3.3"></script>
       <script type="text/javascript">
         new Vue({
@@ -38,8 +53,9 @@
         })
 
         //전역 등록방식
+        //Global component
         Vue.component('my-component',{
-          template : '<div>A Custom component!</div>'
+          template : '<div>A global component!</div>'
         });
 
         //지역 등록방식
@@ -54,6 +70,32 @@
             'my-local-component' : cmp
           }
         })
+
+        new Vue({
+          el : '#app3',
+          data : {
+            msg : '하이욤'
+          }
+        })
+
+        Vue.component('todo-item',{
+          template : '<p>This is a child component</p>'
+        });
+
+        var cmp2 = {
+          template : '<p>헤헤</p>'
+        }
+
+        var app4 = new Vue({
+          el : '#app4',
+          data : {
+            msg : 'This is a parent component'
+          },
+          components :{
+            'ma-component' : cmp2
+          }
+        });
+
       </script>
   </body>
 </html>
@@ -83,5 +125,9 @@
     }
   // ...
   })
+
+  컴포넌트 전역과 지역 등록의 다른점
+  로컬 - 특정 new Vue 인스턴스 에서만 활용할 수 있는 컴포넌트
+
 
 -->
