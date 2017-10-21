@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Vue Sample</title>
+  </head>
+  <body>
+      <div id="app">
+        {{ message }}
+      </div>
+
+      <div id="app2">
+        <button>Parent Component</button>
+        <my-component></my-component>
+        <my-local-component></my-local-component>
+      </div>
+
+      <script src="https://unpkg.com/vue@2.3.3"></script>
+      <script type="text/javascript">
+        new Vue({
+          el : '#app',
+          data : {
+            message : 'Hello Vue.js!'
+          }, //라이프 사이클
+          beforeCreate : function(){
+            console.log("beforeCreate");
+          },
+          created : function(){
+            console.log("created");
+          },
+          mounted : function() {
+            console.log("mounted");
+            this.message = "1"//메세지가 바뀌면 밑에 업데이트가 실행됨.
+          },
+          updated : function() {
+            console.log("updated");
+          }
+        })
+
+        //전역 등록방식
+        Vue.component('my-component',{
+          template : '<div>A Custom component!</div>'
+        });
+
+        //지역 등록방식
+        //local component
+        var cmp = {
+          template : '<div>A local component!</div>'
+        }
+        new Vue({
+          el : '#app2',
+          components : {
+            //태그명 : 컴포넌트의 내용
+            'my-local-component' : cmp
+          }
+        })
+      </script>
+  </body>
+</html>
+
+
+<!--
+  MVVM 패턴이란?
+  Backend 로직과 Client의 마크업 & 데이터 표현단을 분리하기 위한 구조
+  화면 핲단의 화면 동작 관련 로직과 뒷단 DB데이터 처리 및 서버 로직을 분리하고
+  뒷단에서 넘어온 데이터를 모델에 담아 뷰로 넘겨주는 중간지점이라고 보면된다.
+
+  인스턴스
+
+  var vm = new Vue({
+    //...
+  })
+  vm에 담긴 옵션?등등을 인스턴스라고함
+
+  var vm = new Vue({
+    template : ..., / 뒷단 데이터 연결
+    el : ..., / 화면이 그려지는 시작점, 엘리먼트의 약자
+    methods : { / 클릭하거나 기타 http요청이나,, 구현메서드 선언
+
+    },
+    created : { /
+
+    }
+  // ...
+  })
+
+-->
